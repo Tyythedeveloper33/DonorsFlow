@@ -75,7 +75,7 @@ def delete_donation(id):
     db.session.commit()
     return jsonify({'message': 'Donation deleted successfully'}), 200
 
-
+# optionally i can break this following route into more if i want to allow user to view subs in monthly only vice versa
 @donation_routes.route('/subscriptions', methods=['GET'])
 @login_required
 def view_subscriptions():
@@ -84,3 +84,11 @@ def view_subscriptions():
     """
     subscriptions = Donation.query.filter(Donation.frequency.in_(['monthly', 'quarterly'])).all()
     return jsonify([subscription.to_dict() for subscription in subscriptions])
+
+@donation_routes.route('/user/<int:user_id>', methods=['GET'])
+def view_donations_by_user(user_id):
+    """
+    Retrieve all donations made by a specific user.
+    """
+    donations = Donation.query.filter_by(user_id=user_id).all()
+    return jsonify([donation.to_dict() for donation in donations])
