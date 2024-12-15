@@ -1,1 +1,12 @@
 /* TODO: Add sitewide styles */
+/* Set the whole app background */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('/background.webp'); /* Reference the image from public folder */
+    background-size: cover; /* Ensures the image covers the whole screen */
+    background-repeat: no-repeat; /* Prevents tiling */
+    background-attachment: fixed; /* Makes it stay in place when scrolling */
+    background-position: top center; /* Centers the image */
+    font-family: 'Arial', sans-serif; /* Optional global font */
+  }

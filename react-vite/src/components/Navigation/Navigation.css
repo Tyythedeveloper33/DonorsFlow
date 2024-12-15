@@ -1,3 +1,85 @@
-.profile-dropdown {
-  position: absolute;
+/* Navbar container */
+.navbar {
+  background: rgba(0, 0, 0, 0.5); /* Transparent background with slight darkening */
+  backdrop-filter: blur(10px); /* Optional: adds a blur effect behind navbar */
+  padding: 2rem 2rem; /* Increase top and bottom padding for thickness */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of the screen */
+  box-sizing: border-box; /* Ensures padding is included within the width */
+  z-index: 1000; /* Keeps navbar on top */
+  height: 80px; /* Adjust this value for a thicker navbar */
+}
+
+/* Nav list styling */
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: space-between; /* Keeps space between nav items */
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Individual list items */
+.nav-list li {
+  margin: 0 1rem;
+}
+
+/* NavLink styling */
+.nav-link {
+  text-decoration: none;
+  color: #FFFFFF; /* White color for text */
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #FFEB3B; /* Highlight color on hover */
+  transform: scale(1.1); /* Slight scale effect on hover */
+}
+
+.active-link {
+  border-bottom: 2px solid #FFEB3B; /* Active state styling */
+}
+
+/* Profile button styling */
+.profile-button {
+  background: white;
+  color: #00bcd4;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  margin-right: 2rem; /* Adds space between the button and the right edge */
+  white-space: nowrap; /* Prevents button text from wrapping */
+}
+
+/* Profile button hover styling */
+.profile-button:hover {
+  background: #FFEB3B;
+  color: #000;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .nav-list {
+    justify-content: center; /* Center the nav items on smaller screens */
+  }
+
+  .profile-button {
+    margin-right: 1rem; /* Adjust space on smaller screens */
+    font-size: 0.9rem; /* Adjust font size for better fit */
+  }
+
+  .navbar {
+    padding: 1.5rem 1rem; /* Adjust padding for smaller screens */
+    height: 60px; /* Adjust navbar height */
+  }
 }

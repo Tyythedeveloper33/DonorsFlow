@@ -1,0 +1,21 @@
+/*/* Add margin to push the content down below the navbar */
+.DonorsFlow {
+    color: #FFFFFF; /* Clean white */
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 8rem; /* Add enough space to clear the navbar */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    font-family: 'Arial', sans-serif;
+  }
+
+  /* For the tagline */
+  .Empowering {
+    color: #e0e0e000;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 1rem; /* Adjust spacing between the title and tagline */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-family: 'Arial', sans-serif;
+  }
