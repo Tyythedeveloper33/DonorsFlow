@@ -4,6 +4,7 @@ import "./Navigation.css";
 
 function Navigation() {
   return (
+    
     <nav className="navbar">
       <ul className="nav-list">
         <li>

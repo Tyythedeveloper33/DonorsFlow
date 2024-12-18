@@ -91,4 +91,6 @@ def view_donations_by_user(user_id):
     Retrieve all donations made by a specific user.
     """
     donations = Donation.query.filter_by(user_id=user_id).all()
+    if not donations:
+        return jsonify({'message': 'No donations found for this user.'}), 404
     return jsonify([donation.to_dict() for donation in donations])

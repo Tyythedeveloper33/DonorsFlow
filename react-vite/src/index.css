@@ -10,3 +10,9 @@ body {
     background-position: top center; /* Centers the image */
     font-family: 'Arial', sans-serif; /* Optional global font */
   }
+/* Layout Content Wrapper */
+.content-wrapper {
+  padding-top: 140px; /* Adjust this value to match the navbar's height */
+  box-sizing: border-box;
+  min-height: 100vh; /* Ensures it fills the viewport */
+}
