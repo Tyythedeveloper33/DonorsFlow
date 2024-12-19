@@ -1,6 +1,7 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 const SET_DONATIONS = "session/setDonations"; // Changed from LOAD_DONATIONS to SET_DONATIONS
+const UPDATE_DONATION = "session/updateDonation"; // Changed from LOAD_DONATIONS to SET_DONATIONS
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -16,6 +17,10 @@ const setDonations = (donations) => ({
   type: SET_DONATIONS, // Use SET_DONATIONS here
   payload: donations
 });
+const updateDonations = (donation)=>({
+  type: UPDATE_DONATION,
+  payload:donation
+})
 
 export const thunkAuthenticate = () => async (dispatch) => {
   const response = await fetch("/api/auth/");
@@ -84,13 +89,30 @@ export const thunkLoadDonations = (id) => async (dispatch) => {
       if (response.ok) {
           const data = await response.json(); // Parse the response as JSON
           console.log('Donations data:', data); // Log the fetched data
-          dispatch(loadDonations(data)); // Dispatch the action to load donations
+          dispatch(setDonations(data)); // Dispatch the action to load donations
       } else {
           const errorMessage = await response.text(); // Get the error message from the response
           console.error('Failed to fetch donations. Status:', response.status, 'Message:', errorMessage);
       }
   } catch (error) {
       console.error('Error fetching donations:', error);
+  }
+};
+export const thunkUpdateDonation = (credentials) => async (dispatch) => {
+  const response = await fetch(`/api/donations/${credentials.id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(credentials),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(updateDonations(data));
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return errorMessages;
+  } else {
+    return { server: "Something went wrong. Please try again" };
   }
 };
 const initialState = {
@@ -114,6 +136,17 @@ function sessionReducer(state = initialState, action) {
       };
     case REMOVE_USER:
       return { ...state, user: null };
+      case UPDATE_DONATION:
+  return {
+    ...state,
+    user: {
+      ...state.user,
+      donations: state.user.donations.map((donation) =>
+        donation.id === action.payload.id ? action.payload : donation
+      ),
+    },
+  };
+
     case SET_DONATIONS: // Use SET_DONATIONS here
       return {
         ...state,

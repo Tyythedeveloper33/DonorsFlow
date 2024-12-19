@@ -4,6 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Home from '../components/Home';
 import Layout from './Layout';
 import LognSignPage from '../components/LognSign';
+import ViewDonors from '../components/ViewDonors';
 export const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -17,8 +18,8 @@ export const router = createBrowserRouter([
         element: <Home/>,
       },
       {
-        path: "signup",
-        element: <SignupFormPage />,
+        path: "donations",
+        element: <ViewDonors/>,
       },
     ],
   },

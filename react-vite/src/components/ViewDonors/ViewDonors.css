@@ -1,0 +1,66 @@
+/* Overall container styling */
+.view-donors-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Title styling */
+  .view-donors-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+  }
+
+  /* Grid layout for donor cards */
+  .donors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 10px;
+  }
+
+  /* Donor card styling */
+  .donor-card {
+    background-color: #f8f9fa;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .donor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Donor name styling */
+  .donor-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+
+  /* Donor amount and date styling */
+  .donor-amount,
+  .donor-date {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .view-donors-title {
+      font-size: 2rem;
+    }
+
+    .donor-card {
+      padding: 15px;
+    }
+  }

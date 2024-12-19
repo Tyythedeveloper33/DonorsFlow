@@ -1,0 +1,35 @@
+.edit-donor-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .edit-donor-modal h2 {
+    margin-bottom: 15px;
+  }
+
+  .edit-donor-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .edit-donor-modal input,
+  .edit-donor-modal select {
+    padding: 8px;
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .edit-donor-modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .edit-donor-modal-buttons button {
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+  }

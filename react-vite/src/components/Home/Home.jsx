@@ -2,35 +2,48 @@ import "./Home.css";
 import { useSelector , useDispatch} from "react-redux";
 import { useEffect } from "react";
 import {thunkLoadDonations }from "../../redux/session"
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
  const dispatch = useDispatch()
-
  const sessionUser = useSelector((state) => state.session.user);
+ const navigate = useNavigate()
+ let username
+ let totalDonations
+ let totalAmtDonations
+ if(sessionUser){
+  username = sessionUser.username
+  totalDonations = sessionUser.donations.length
+  totalAmtDonations = sessionUser.donations.reduce((total, donation) => {
+    return total + donation.amount;
+  }, 0);
+
+
+ }
+
  useEffect(() => {
-    // console.log('Current sessionUser:', sessionUser); // Log the sessionUser object
-    if (sessionUser?.id) {
-        // console.log('Dispatching thunkLoadDonations with user ID:', sessionUser.id); // Log the user ID
-        try {
+
+
             dispatch(thunkLoadDonations(sessionUser.id));
-        } catch (error) {
-            console.error('Error dispatching thunkLoadDonations:', error); // Log any errors that occur during dispatch
-        }
-    } else {
-        console.error('sessionUser.id is undefined or null'); // Log if ID is invalid
-    }
-}, [sessionUser, dispatch]);
+
+
+}, [username, totalDonations]);
+const viewDonations = ()=> {
+ navigate('/donations')
+}
 
   return (
     <div className="home-dashboard">
-      <h1 className="welcome-header">Welcome back, <span></span>!</h1>
+      <h1 className="welcome-header">Welcome back, <span>{username}</span>!</h1>
 
       <div className="stats-container">
         <div className="stat-card">
-          <h3>My Donations</h3>
+
+          <h3> Donations</h3>
+          <button onClick={viewDonations}>View Donors</button>
           <div className="stat-value">
-            <p>10</p>
-            <span>$10</span>
+            <p>{totalDonations}</p>
+            <span>total ${totalAmtDonations}</span>
           </div>
         </div>
         <div className="stat-card">

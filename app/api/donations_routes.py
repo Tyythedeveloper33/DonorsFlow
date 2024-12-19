@@ -44,7 +44,7 @@ def add_donations():
         return jsonify({'error': str(e)}), 500
 
 
-@donation_routes.route('/<int:id>', methods=['PUT'])
+@donation_routes.route('/<int:id>', methods=['POST'])
 def update_donation(id):
     """
     Update donation details.
@@ -82,7 +82,7 @@ def view_subscriptions():
     """
     View all donations with a frequency of 'monthly' or 'quarterly' to represent subscriptions.
     """
-    subscriptions = Donation.query.filter(Donation.frequency.in_(['monthly', 'quarterly'])).all()
+    subscriptions = Donation.query.filter(Donation.frequency.in_(['monthly', 'yearly'])).all()
     return jsonify([subscription.to_dict() for subscription in subscriptions])
 
 @donation_routes.route('/user/<int:user_id>', methods=['GET'])
