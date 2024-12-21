@@ -1,7 +1,7 @@
 import "./ViewDonors.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { thunkLoadDonations } from "../../redux/session";
+import { thunkDeleteDonor, thunkLoadDonations } from "../../redux/session";
 import { useModal } from "../../context/Modal";
 import EditDonorModal from "../EditDonorModal/EditDonorModal";
 
@@ -37,12 +37,25 @@ export default function ViewDonors() {
       />
     );
   };
+  const handleDelete = (donor) => {
+
+
+        console.log(donor)
+        dispatch(thunkDeleteDonor(sessionUser.id, donor))
+
+    }
+
+
+
 
   const handleAdd = () => {
     setModalContent(
       <AddDonorModal
         onAdd={(newDonor) => {
           setDonors((prevDonors) => [...prevDonors, newDonor]);
+          setTimeout(() => {
+          dispatch(thunkLoadDonations(sessionUser.id))
+          },100);
         }}
       />
     );
@@ -64,6 +77,7 @@ export default function ViewDonors() {
                 📅 {new Date(donor.date).toLocaleDateString()}
               </p>
               <button onClick={() => handleEdit(donor)}>Edit</button>
+              <button className="Delete" onClick={() => handleDelete(donor)}>Delete</button>
             </div>
           ))}
         </div>
