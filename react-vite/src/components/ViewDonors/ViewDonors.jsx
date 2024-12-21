@@ -5,6 +5,8 @@ import { thunkLoadDonations } from "../../redux/session";
 import { useModal } from "../../context/Modal";
 import EditDonorModal from "../EditDonorModal/EditDonorModal";
 
+import AddDonorModal from "../AddDonorModal/AddDonorModal";
+
 export default function ViewDonors() {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
@@ -36,8 +38,19 @@ export default function ViewDonors() {
     );
   };
 
+  const handleAdd = () => {
+    setModalContent(
+      <AddDonorModal
+        onAdd={(newDonor) => {
+          setDonors((prevDonors) => [...prevDonors, newDonor]);
+        }}
+      />
+    );
+  };
+
   return (
     <div className="view-donors-container">
+      <button onClick={handleAdd}>Add New Donor</button>
       <h1 className="view-donors-title">Our Generous Donors</h1>
       {donors.length === 0 ? (
         <p className="no-donors-message">No donors available yet.</p>

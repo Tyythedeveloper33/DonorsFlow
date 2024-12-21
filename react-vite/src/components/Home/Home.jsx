@@ -40,7 +40,7 @@ const viewDonations = ()=> {
         <div className="stat-card">
 
           <h3> Donations</h3>
-          <button onClick={viewDonations}>View Donors</button>
+          <button onClick={viewDonations}>View/ Add Donors</button>
           <div className="stat-value">
             <p>{totalDonations}</p>
             <span>total ${totalAmtDonations}</span>

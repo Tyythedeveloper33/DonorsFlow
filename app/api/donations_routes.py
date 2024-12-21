@@ -14,24 +14,25 @@ def get_all_donations():
     return jsonify([donation.to_dict() for donation in donations])
 
 
+
+
 @donation_routes.route('/', methods=["POST"])
-@login_required
 def add_donations():
     """
-    Add a new donation to the system.
+    Add a new donation to the system using a provided user ID.
     """
     data = request.get_json()
 
     # Validate required fields
-    if not all(key in data for key in ['donor_name', 'amount']):
-        return jsonify({'error': 'Missing required fields: donor_name or amount'}), 400
+    if not all(key in data for key in ['donor_name', 'amount', 'user_id']):
+        return jsonify({'error': 'Missing required fields: donor_name, amount, or user_id'}), 400
 
     try:
         # Create a new donation object
         new_donation = Donation(
             donor_name=data['donor_name'],
             amount=float(data['amount']),
-            user_id=current_user.id  # Use the currently logged-in user
+            user_id=data['user_id']  # Use the provided user ID
         )
 
         # Add and commit to the database
@@ -42,6 +43,7 @@ def add_donations():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
+
 
 
 @donation_routes.route('/<int:id>', methods=['POST'])

@@ -2,6 +2,7 @@ const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 const SET_DONATIONS = "session/setDonations"; // Changed from LOAD_DONATIONS to SET_DONATIONS
 const UPDATE_DONATION = "session/updateDonation"; // Changed from LOAD_DONATIONS to SET_DONATIONS
+const ADD_DONATION = "session/addDonation"; // Changed from LOAD_DONATIONS to SET_DONATIONS
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -20,6 +21,10 @@ const setDonations = (donations) => ({
 const updateDonations = (donation)=>({
   type: UPDATE_DONATION,
   payload:donation
+})
+const addDonation = (donation)=>({
+type: ADD_DONATION,
+payload:donation
 })
 
 export const thunkAuthenticate = () => async (dispatch) => {
@@ -115,6 +120,26 @@ export const thunkUpdateDonation = (credentials) => async (dispatch) => {
     return { server: "Something went wrong. Please try again" };
   }
 };
+// stuck trying to add donor , getting a 401 unauthorized from api/auth
+export const thunkAddDonor = (donor) => async (dispatch) => {
+  console.log('about to take off!!!')
+  const response = await fetch("/api/donations", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(donor),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(addDonation(data))
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return { errors: errorMessages };
+  } else {
+    return { errors: { server: "Something went wrong. Please try again." } };
+  }
+};
+
 const initialState = {
   user: {
     donations: [], // Initialize donations as an empty array

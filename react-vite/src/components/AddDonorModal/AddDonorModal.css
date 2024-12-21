@@ -1,0 +1,78 @@
+.add-donor-modal {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+  }
+
+  .add-donor-modal h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333333;
+  }
+
+  .add-donor-modal form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555555;
+  }
+
+  .add-donor-modal input,
+  .add-donor-modal select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .add-donor-modal input:focus,
+  .add-donor-modal select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .add-donor-modal .add-donor-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .add-donor-modal button {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .add-donor-modal button:hover {
+    background-color: #0056b3;
+  }
+
+  .add-donor-modal button[type="button"]:nth-child(1) {
+    background-color: #6c757d;
+  }
+
+  .add-donor-modal button[type="button"]:nth-child(1):hover {
+    background-color: #5a6268;
+  }
+
+  .add-donor-modal .error {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
