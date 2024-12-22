@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { thunkAddDonor } from "../../redux/session";
+import { thunkAddDonor, thunkLoadDonations } from "../../redux/session";
 import { useModal } from "../../context/Modal";
 import "./AddDonorModal.css";
 import { useSelector } from "react-redux";
@@ -10,7 +10,9 @@ function AddDonorModal({ onAdd }) {
   const { closeModal } = useModal();
   const [donorName, setDonorName] = useState("");
   const [amount, setAmount] = useState("");
-  const [frequency, setFrequency] = useState("One-time");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [frequency, setFrequency] = useState("One-Time");
   const [errors, setErrors] = useState({});
   const sessionUser = useSelector((state) => state.session.user);
   const handleSave = async () => {
@@ -18,7 +20,9 @@ function AddDonorModal({ onAdd }) {
       user_id:sessionUser.id,
       donor_name: donorName,
       amount: parseFloat(amount),
-      frequency,
+      donor_email:email,
+      donor_phone:phoneNumber,
+      frequency:frequency,
     };
 
     // Basic validation
@@ -27,12 +31,16 @@ function AddDonorModal({ onAdd }) {
     if (!amount || amount <= 0) validationErrors.amount = "Amount must be greater than 0.";
 
 
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
     const response = dispatch(thunkAddDonor(newDonor));
+    setTimeout(() => {
+        dispatch(thunkLoadDonations(sessionUser.id))
+    }, 500);
     if (response?.errors) {
       setErrors(response.errors); // Handle server-side errors
     } else {
@@ -66,9 +74,29 @@ function AddDonorModal({ onAdd }) {
           {errors.amount && <p className="error">{errors.amount}</p>}
         </label>
         <label>
+          email:
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+        </label>
+        <label>
+          phone Number:
+          <input
+            type="number"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            required
+          />
+
+        </label>
+        <label>
           Frequency:
           <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
-            <option value="One-time">One-time</option>
+            <option value="one-time">One-time</option>
             <option value="Monthly">Monthly</option>
             <option value="Yearly">Yearly</option>
           </select>

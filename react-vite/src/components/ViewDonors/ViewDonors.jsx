@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { thunkDeleteDonor, thunkLoadDonations } from "../../redux/session";
 import { useModal } from "../../context/Modal";
 import EditDonorModal from "../EditDonorModal/EditDonorModal";
-
 import AddDonorModal from "../AddDonorModal/AddDonorModal";
 
 export default function ViewDonors() {
@@ -37,16 +36,10 @@ export default function ViewDonors() {
       />
     );
   };
+
   const handleDelete = (donor) => {
-
-
-        console.log(donor)
-        dispatch(thunkDeleteDonor(sessionUser.id, donor))
-
-    }
-
-
-
+    dispatch(thunkDeleteDonor(sessionUser.id, donor));
+  };
 
   const handleAdd = () => {
     setModalContent(
@@ -54,8 +47,8 @@ export default function ViewDonors() {
         onAdd={(newDonor) => {
           setDonors((prevDonors) => [...prevDonors, newDonor]);
           setTimeout(() => {
-          dispatch(thunkLoadDonations(sessionUser.id))
-          },100);
+            dispatch(thunkLoadDonations(sessionUser.id));
+          }, 100);
         }}
       />
     );
@@ -63,7 +56,9 @@ export default function ViewDonors() {
 
   return (
     <div className="view-donors-container">
-      <button onClick={handleAdd}>Add New Donor</button>
+      <button className="add-donor-button" onClick={handleAdd}>
+        Add New Donor
+      </button>
       <h1 className="view-donors-title">Our Generous Donors</h1>
       {donors.length === 0 ? (
         <p className="no-donors-message">No donors available yet.</p>
@@ -71,13 +66,44 @@ export default function ViewDonors() {
         <div className="donors-grid">
           {donors.map((donor) => (
             <div className="donor-card" key={donor.id}>
-              <h2 className="donor-name">{donor.donor_name}</h2>
-              <p className="donor-amount">💵 ${donor.amount}</p>
-              <p className="donor-date">
-                📅 {new Date(donor.date).toLocaleDateString()}
-              </p>
-              <button onClick={() => handleEdit(donor)}>Edit</button>
-              <button className="Delete" onClick={() => handleDelete(donor)}>Delete</button>
+              <div className="donor-header">
+                <h2 className="donor-name">{donor.donor_name}</h2>
+                <p className="donor-frequency">{donor.frequency} Donor</p>
+              </div>
+              <div className="donor-details">
+                <p className="donor-email">
+                  <span role="img" aria-label="email">
+                    📧
+                  </span>{" "}
+                  {donor.donor_email || "Not Provided"}
+                </p>
+                <p className="donor-phone">
+                  <span role="img" aria-label="phone">
+                    📞
+                  </span>{" "}
+                  {donor.donor_phone || "Not Provided"}
+                </p>
+                <p className="donor-amount">
+                  <span role="img" aria-label="amount">
+                    💵
+                  </span>{" "}
+                  ${donor.amount}
+                </p>
+                <p className="donor-date">
+                  <span role="img" aria-label="date">
+                    📅
+                  </span>{" "}
+                  {new Date(donor.date).toLocaleDateString()}
+                </p>
+              </div>
+              <div className="donor-actions">
+                <button className="edit-button" onClick={() => handleEdit(donor)}>
+                  Edit
+                </button>
+                <button className="delete-button" onClick={() => handleDelete(donor)}>
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

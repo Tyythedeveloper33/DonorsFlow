@@ -13,6 +13,8 @@ class Donation(db.Model):
     date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     frequency = db.Column(db.String(50), default="one-time", nullable=True)
+    donor_email = db.Column(db.String(255), nullable=False)
+    donor_phone = db.Column(db.Integer, nullable=False)
 
 
     def to_dict(self):
@@ -22,4 +24,7 @@ class Donation(db.Model):
             'amount': self.amount,
             'date': self.date,
             'user_id': self.user_id,
+            'donor_email':self.donor_email,
+            'donor_phone':self.donor_phone,
+            'frequency':self.frequency
         }

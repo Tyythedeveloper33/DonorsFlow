@@ -32,7 +32,10 @@ def add_donations():
         new_donation = Donation(
             donor_name=data['donor_name'],
             amount=float(data['amount']),
-            user_id=data['user_id']  # Use the provided user ID
+            frequency=data['frequency'],
+            user_id=data['user_id'],
+            donor_email=data['donor_email'],
+            donor_phone=data['donor_phone']
         )
 
         # Add and commit to the database
@@ -57,6 +60,8 @@ def update_donation(id):
     # Update the donation's properties
     donation.donor_name = data.get('donor_name', donation.donor_name)
     donation.amount = data.get('amount', donation.amount)
+    donation.donor_email = data.get('donor_email', donation.donor_email)
+    donation.donor_phone = data.get('donor_phone', donation.donor_phone)
 
     frequency = data.get('frequency')
     if frequency:

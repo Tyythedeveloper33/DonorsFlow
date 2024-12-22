@@ -10,9 +10,8 @@ function EditDonorModal({ donor, onSave }) {
 
   const [donorName, setDonorName] = useState(donor?.donor_name || "");
   const [amount, setAmount] = useState(donor?.amount || "");
-  const [date, setDate] = useState(
-    donor?.date ? new Date(donor.date).toISOString().split("T")[0] : ""
-  );
+  const [email, setemail] = useState(donor?.donor_email || "");
+  const [phoneNumber, setPhoneNumber] = useState(donor?.donor_phone|| "");
   const [frequency, setFrequency] = useState(donor?.frequency || "One-time");
   const [errors, setErrors] = useState({});
 
@@ -20,16 +19,19 @@ function EditDonorModal({ donor, onSave }) {
     const updatedDonor = {
       ...donor,
       donor_name: donorName,
-      amount: parseFloat(amount), // Ensure the amount is stored as a number
-      date,
+      amount: parseFloat(amount),
+      donor_phone:phoneNumber,
+      donor_email:email, // Ensure the amount is stored as a number
       frequency,
+
     };
 
     // Basic validation
     const validationErrors = {};
     if (!donorName.trim()) validationErrors.donor_name = "Donor name is required.";
     if (!amount || amount <= 0) validationErrors.amount = "Amount must be greater than 0.";
-    if (!date) validationErrors.date = "Date is required.";
+
+
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -71,14 +73,24 @@ function EditDonorModal({ donor, onSave }) {
           {errors.amount && <p className="error">{errors.amount}</p>}
         </label>
         <label>
-          Date:
+          Email:
           <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            type="text"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
             required
           />
-          {errors.date && <p className="error">{errors.date}</p>}
+
+        </label>
+        <label>
+          phone:
+          <input
+            type="number"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            required
+          />
+
         </label>
         <label>
           Frequency:

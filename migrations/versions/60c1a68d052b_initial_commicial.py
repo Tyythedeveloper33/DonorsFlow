@@ -1,8 +1,8 @@
-"""Added frequency field to Donation model
+"""initial commicial
 
-Revision ID: ec52d1f6d36c
+Revision ID: 60c1a68d052b
 Revises: 
-Create Date: 2024-12-10 15:48:14.692312
+Create Date: 2024-12-22 18:01:27.028179
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ec52d1f6d36c'
+revision = '60c1a68d052b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,6 +34,8 @@ def upgrade():
     sa.Column('date', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('frequency', sa.String(length=50), nullable=True),
+    sa.Column('donor_email', sa.String(length=255), nullable=False),
+    sa.Column('donor_phone', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

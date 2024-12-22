@@ -1,70 +1,148 @@
 /* Overall container styling */
 .view-donors-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-  }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
 
-  /* Title styling */
-  .view-donors-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #2c3e50;
-  }
+/* Title styling */
+.view-donors-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
 
-  /* Grid layout for donor cards */
-  .donors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 10px;
-  }
+/* Add donor button styling */
+.add-donor-button {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-  /* Donor card styling */
+.add-donor-button:hover {
+  background-color: #2980b9;
+}
+
+/* Grid layout for donor cards */
+.donors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+/* Donor card styling */
+.donor-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.donor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Header styling */
+.donor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.donor-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.donor-frequency {
+  font-size: 0.9rem;
+  color: #888;
+  background-color: #f1f1f1;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Donor details styling */
+.donor-details {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.donor-details p {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.donor-details span {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+/* Action buttons styling */
+.donor-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-button,
+.delete-button {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.edit-button {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.edit-button:hover {
+  background-color: #2980b9;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .donor-card {
-    background-color: #f8f9fa;
-    border: 1px solid #dcdcdc;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 15px;
   }
 
-  .donor-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Donor name styling */
   .donor-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
   }
 
-  /* Donor amount and date styling */
-  .donor-amount,
-  .donor-date {
-    font-size: 1rem;
-    color: #555;
-    margin: 5px 0;
+  .donor-details p {
+    font-size: 0.9rem;
   }
-
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .view-donors-title {
-      font-size: 2rem;
-    }
-
-    .donor-card {
-      padding: 15px;
-    }
-  }
-.Delete{
-  
-  margin-left: 10px;
 }
