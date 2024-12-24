@@ -40,7 +40,7 @@ const viewDonations = ()=> {
         <div className="stat-card">
 
           <h3> Donations</h3>
-          <button onClick={viewDonations}>View/ Add Donors</button>
+          <button onClick={viewDonations}>View/Add Donors</button>
           <div className="stat-value">
             <p>{totalDonations}</p>
             <span>total ${totalAmtDonations}</span>
@@ -56,20 +56,17 @@ const viewDonations = ()=> {
       </div>
 
       <div className="recent-donations">
-        <h3>Recent Donations</h3>
+        <h3>Subscribers</h3>
         <table>
           <thead>
-            <tr>
-              <th>Home</th>
               <th>Total Donations</th>
               <th>Date</th>
               <th>Active Subscriptions</th>
               <th>Manage</th>
-            </tr>
+
           </thead>
           <tbody>
             <tr>
-              <td>My Donations</td>
               <td>$500</td>
               <td>$5.00</td>
               <td>$2.00</td>

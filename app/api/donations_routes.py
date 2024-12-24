@@ -89,7 +89,7 @@ def view_subscriptions():
     """
     View all donations with a frequency of 'monthly' or 'quarterly' to represent subscriptions.
     """
-    subscriptions = Donation.query.filter(Donation.frequency.in_(['monthly', 'yearly'])).all()
+    subscriptions = Donation.query.filter(Donation.frequency.in_(['Monthly', 'Yearly'])).all()
     return jsonify([subscription.to_dict() for subscription in subscriptions])
 
 @donation_routes.route('/user/<int:user_id>', methods=['GET'])
