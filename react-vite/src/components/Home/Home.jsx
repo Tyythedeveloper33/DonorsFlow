@@ -11,13 +11,20 @@ export default function Home() {
  let username
  let totalDonations
  let totalAmtDonations
+ let totalDonors
+ let donorTotal
  if(sessionUser){
   username = sessionUser.username
-  totalDonations = sessionUser.donations.length
-  totalAmtDonations = sessionUser.donations.reduce((total, donation) => {
-    return total + donation.amount;
-  }, 0);
+  totalDonors = sessionUser.donors.length
 
+    totalAmtDonations = sessionUser.donors.reduce((total, donor) => {
+    // Sum donations for each donor
+     donorTotal = donor.donations.reduce((donationTotal, donation) => {
+      return donationTotal + donation.amount;
+    }, 0);
+
+    return total + donorTotal;
+  }, 0);
 
  }
 
@@ -29,7 +36,7 @@ export default function Home() {
 
 }, [username, totalDonations]);
 const viewDonations = ()=> {
- navigate('/donations')
+ navigate('/donors')
 }
 
   return (
@@ -42,7 +49,7 @@ const viewDonations = ()=> {
           <h3> Donations</h3>
           <button onClick={viewDonations}>View/Add Donors</button>
           <div className="stat-value">
-            <p>{totalDonations}</p>
+            <p>{totalDonors}</p>
             <span>total ${totalAmtDonations}</span>
           </div>
         </div>

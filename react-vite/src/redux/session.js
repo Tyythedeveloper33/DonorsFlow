@@ -89,7 +89,7 @@ export const thunkLoadDonations = (id) => async (dispatch) => {
 
   console.log('Dispatching thunkLoadDonations with user ID:', id);
   try {
-      const response = await fetch(`/api/donations/user/${id}`);
+      const response = await fetch(`/api/donor/user/${id}`);
       console.log('Response status:', response.status); // Log the response status
 
       if (response.ok) {
@@ -104,9 +104,9 @@ export const thunkLoadDonations = (id) => async (dispatch) => {
       console.error('Error fetching donations:', error);
   }
 };
-export const thunkUpdateDonation = (credentials) => async (dispatch) => {
-  const response = await fetch(`/api/donations/${credentials.id}`, {
-    method: "POST",
+export const thunkUpdateDonor = (credentials) => async (dispatch) => {
+  const response = await fetch(`/api/donor/${credentials.id}`, {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
   });
@@ -124,7 +124,7 @@ export const thunkUpdateDonation = (credentials) => async (dispatch) => {
 // stuck trying to add donor , getting a 401 unauthorized from api/auth
 export const thunkAddDonor = (donor) => async (dispatch) => {
   console.log('about to take off!!!')
-  const response = await fetch("/api/donations", {
+  const response = await fetch("/api/donor", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(donor),
@@ -142,7 +142,7 @@ export const thunkAddDonor = (donor) => async (dispatch) => {
 };
 export const thunkDeleteDonor = (currentUserId,donor) => async (dispatch) => {
   console.log('about to take off!!!')
-  const response = await fetch(`/api/donations/${donor.id}`, {
+  const response = await fetch(`/api/donor/${donor.id}`, {
     method: "DELETE"
   });
 

@@ -100,36 +100,64 @@
 
 /* Action buttons styling */
 .donor-actions {
+  margin-top: 10px;
+}
+
+.donor-actions-row {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.view-donations-button,
+.manage-subscriptions-button {
+  flex: 1;
   padding: 8px 15px;
   font-size: 0.9rem;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
+  color: #fff;
 }
 
+/* Edit button */
 .edit-button {
-  background-color: #3498db;
-  color: #fff;
+  background-color: #1abc9c; /* Same as View Donations and Manage Subscriptions */
 }
 
 .edit-button:hover {
-  background-color: #2980b9;
+  background-color: #16a085;
 }
 
+/* Delete button */
 .delete-button {
   background-color: #e74c3c;
-  color: #fff;
 }
 
 .delete-button:hover {
   background-color: #c0392b;
+}
+
+/* View Donations Button */
+.view-donations-button {
+  background-color: #1abc9c;
+}
+
+.view-donations-button:hover {
+  background-color: #16a085;
+}
+
+/* Manage Subscriptions Button */
+.manage-subscriptions-button {
+  background-color: #1abc9c;
+}
+
+.manage-subscriptions-button:hover {
+  background-color: #16a085;
 }
 
 /* Responsive design */

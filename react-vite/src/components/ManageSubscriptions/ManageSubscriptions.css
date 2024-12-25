@@ -1,0 +1,24 @@
+/* General Container Styling */
+.view-donations-container,
+.manage-subscriptions-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.view-donations-title,
+.manage-subscriptions-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #34495e;
+}
+
+.view-donations-message,
+.manage-subscriptions-message {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-top: 20px;
+}

@@ -9,26 +9,22 @@ function AddDonorModal({ onAdd }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [donorName, setDonorName] = useState("");
-  const [amount, setAmount] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [frequency, setFrequency] = useState("One-Time");
   const [errors, setErrors] = useState({});
   const sessionUser = useSelector((state) => state.session.user);
   const handleSave = async () => {
     const newDonor = {
       user_id:sessionUser.id,
-      donor_name: donorName,
-      amount: parseFloat(amount),
-      donor_email:email,
-      donor_phone:phoneNumber,
-      frequency:frequency,
+      name: donorName,
+      email:email,
+      phone:phoneNumber,
     };
 
     // Basic validation
     const validationErrors = {};
     if (!donorName.trim()) validationErrors.donor_name = "Donor name is required.";
-    if (!amount || amount <= 0) validationErrors.amount = "Amount must be greater than 0.";
+
 
 
 
@@ -64,16 +60,6 @@ function AddDonorModal({ onAdd }) {
           {errors.donor_name && <p className="error">{errors.donor_name}</p>}
         </label>
         <label>
-          Amount:
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
-          {errors.amount && <p className="error">{errors.amount}</p>}
-        </label>
-        <label>
           email:
           <input
             type="text"
@@ -92,14 +78,6 @@ function AddDonorModal({ onAdd }) {
             required
           />
 
-        </label>
-        <label>
-          Frequency:
-          <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
-            <option value="one-time">One-time</option>
-            <option value="Monthly">Monthly</option>
-            <option value="Yearly">Yearly</option>
-          </select>
         </label>
         <div className="add-donor-modal-buttons">
           <button type="button" onClick={closeModal}>Cancel</button>
