@@ -1,98 +1,116 @@
 /* ViewDonations.css */
 .view-donations-container {
-    max-width: 550px; /* Slightly narrower container */
-    margin: 0 auto;
-    padding: 16px; /* Reduced padding */
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
+  max-width: 550px; /* Slightly narrower container */
+  margin: 0 auto;
+  padding: 16px; /* Reduced padding */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-  .view-donations-title {
-    text-align: center;
-    font-size: 1.8rem; /* Slightly smaller title */
-    margin-bottom: 12px; /* Reduced margin */
-    color: #333;
-  }
+.view-donations-title {
+  text-align: center;
+  font-size: 2rem; /* Slightly larger title */
+  margin-bottom: 16px; /* Increased margin for spacing */
+  color: #333;
+  font-weight: bold; /* Bold title for emphasis */
+}
 
-  .donations-list {
-    overflow-y: auto;
-    max-height: 380px; /* Reduced max-height for scrolling */
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Smaller gap between donation cards */
-  }
+.donations-list-container {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 380px; /* Set a maximum height for the list */
+  padding-right: 10px; /* Prevent content from touching the scrollbar */
+  border: 1px solid #e0e0e0; /* Light border for separation */
+  border-radius: 8px; /* Rounded corners for the container */
+}
 
-  .donation-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 10px; /* Reduced padding */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-  }
+.donations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Smaller gap between donation cards */
+  padding: 10px; /* Padding inside the list for better spacing */
+}
 
-  .donation-card:nth-child(odd) {
-    background-color: #f0f8ff; /* Light blue for odd cards */
-  }
+.donation-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px; /* Increased padding for a more spacious feel */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
+  width: 100%;
+  height: 100px; /* Fixed height for donation cards */
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
 
-  .donation-card:nth-child(even) {
-    background-color: #ffffff; /* White for even cards */
-  }
+.donation-card:nth-child(odd) {
+  background-color: #f0f8ff; /* Light blue for odd cards */
+}
 
-  .donation-card .donation-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
+.donation-card:nth-child(even) {
+  background-color: #ffffff; /* White for even cards */
+}
 
-  .donation-header h3 {
-    font-size: 1rem; /* Smaller font size */
-    color: #333;
-  }
+.donation-card:hover {
+  background-color: #e9ecef; /* Light gray on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
 
-  .donation-date {
-    font-size: 0.85rem; /* Smaller font size */
-    color: #777;
-  }
+.donation-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
-  .donation-details {
-    margin-top: 10px; /* Reduced margin */
-  }
+.donation-header h3 {
+  font-size: 1.1rem; /* Slightly larger font size */
+  color: #333;
+  margin: 0; /* Remove default margin */
+}
 
-  .donation-label {
-    font-weight: bold;
-    color: #555;
-  }
+.donation-date {
+  font-size: 0.85rem; /* Smaller font size */
+  color: #777;
+}
 
-  .generate-statement-button {
-    display: inline-block;
-    margin-top: 12px; /* Reduced margin */
-    padding: 6px 10px; /* Smaller button padding */
-    background-color: #28a745;
-    color: #fff;
-    font-size: 0.9rem; /* Slightly smaller font size */
-    border-radius: 4px;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.donation-details {
+  margin-top: -10px; /* Keep this as is to prevent cutting off */
+}
 
-  .generate-statement-button:hover {
-    background-color: #218838;
-  }
+.donation-label {
+  font-weight: bold;
+  color: #555;
+  font-size: 1rem; /* Ensure the amount is clearly visible */
+}
 
-  .no-donations-message {
-    text-align: center;
-    color: #777;
-    font-size: 1.1rem; /* Smaller font size */
-    margin-top: 30px; /* Reduced margin */
-  }
+.generate-statement-button {
+  display: inline-block;
+  margin-top: 12px; /* Reduced margin */
+  padding: 10px 15px; /* Adjusted button padding for better click area */
+  background-color: #28a745;
+  color: #fff;
+  font-size: 1rem; /* Slightly larger font size */
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+.generate-statement-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.no-donations-message {
+  text-align: center;
+  color: #777;
+  font-size: 1.1rem; /* Smaller font size */
+  margin-top: 30px; /* Reduced margin */
+}

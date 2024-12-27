@@ -31,7 +31,7 @@ export default function Home() {
  useEffect(() => {
 
 
-            dispatch(thunkLoadDonations(sessionUser.id));
+    dispatch(thunkLoadDonations(sessionUser.id));
 
 
 }, [username, totalDonations]);

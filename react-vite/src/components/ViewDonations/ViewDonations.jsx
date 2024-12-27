@@ -30,14 +30,12 @@ export default function ViewDonations() {
       <AddDonationModal
         onAdd={async (newDonation) => {
           // Dispatch the thunk and wait for the response
-          const response = await dispatch(thunkAddDonation(newDonation,sessionUser.id));
+          const response = await dispatch(thunkAddDonation(newDonation, sessionUser.id));
 
           if (response && !response.errors) {
             // Update local state with the new donation
             setDonations((prevDonations) => [...prevDonations, response]);
-            console.log("donations", donations);
-
-
+            console.log("Updated donations:", [...donations, response]);
           } else {
             console.error("Failed to add donation:", response.errors);
           }
@@ -50,24 +48,26 @@ export default function ViewDonations() {
   return (
     <div className="view-donations-container">
       <h1 className="view-donations-title">Donation History</h1>
-      <div className="donations-list">
-        {donations.length === 0 ? (
-          <p className="no-donations-message">No donations to display.</p>
-        ) : (
-          donations.map((donation) => (
-            <div className="donation-card" key={donation.id}>
-              <div className="donation-header">
-                <h3>{donorData ? donorData.name : "Anonymous"}</h3>
-                <p className="donation-date">{new Date(donation.date).toLocaleDateString()}</p>
+      <div className="donations-list-container"> {/* Added container for scrolling */}
+        <div className="donations-list">
+          {donations.length === 0 ? (
+            <p className="no-donations-message">No donations to display.</p>
+          ) : (
+            donations.map((donation) => (
+              <div className="donation-card" key={donation.id}>
+                <div className="donation-header">
+                  <h3>{donorData ? donorData.name : "Anonymous"}</h3>
+                  <p className="donation-date">{new Date(donation.date).toLocaleDateString()}</p>
+                </div>
+                <div className="donation-details">
+               
+                    <span className="donation-label">Amount: {donation.amount}</span>
+
+                </div>
               </div>
-              <div className="donation-details">
-                <p>
-                  <span className="donation-label">Amount:</span> ${donation.amount}
-                </p>
-              </div>
-            </div>
-          ))
-        )}
+            ))
+          )}
+        </div>
       </div>
       <button className="generate-statement-button">Generate Statement</button>
       <button className="make-donation-button" onClick={handleMakeDonationClick}>
