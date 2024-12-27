@@ -13,7 +13,7 @@ export default function Home() {
  let totalAmtDonations
  let totalDonors
  let donorTotal
- if(sessionUser){
+ if(sessionUser && sessionUser.id){
   username = sessionUser.username
   totalDonors = sessionUser.donors.length
 

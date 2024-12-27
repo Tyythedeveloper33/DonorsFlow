@@ -58,8 +58,16 @@ export default function ViewDonors() {
     );
   };
 
-  const handleDelete = (donor) => {
-    dispatch(thunkDeleteDonor(sessionUser.id, donor));
+  const handleDelete = async (donor) => {
+    try {
+      // Dispatch the delete action and wait for it to complete
+      await dispatch(thunkDeleteDonor(parseInt(sessionUser.id), donor));
+
+      // Update the local state to remove the deleted donor
+      setDonors((prevDonors) => prevDonors.filter((d) => d.id !== donor.id));
+    } catch (error) {
+      console.error("Failed to delete donor:", error);
+    }
   };
 
   const handleViewDonations = (donorId) => {

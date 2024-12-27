@@ -10,7 +10,8 @@ class Donation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     donor_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('donors.id')), nullable=False)
     amount = db.Column(db.Float, nullable=False)
-    date = db.Column(db.DateTime, default=datetime.now(tz=timezone.utc))  # Use datetime.now(tz=timezone.utc)
+    # date is coming back incorrect need to figure out how to get correct date
+    date = db.Column(db.DateTime, default=datetime.utcnow)  # Use datetime.now(tz=timezone.utc)
     subscription_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('subscriptions.id')), nullable=True)
 
     def to_dict(self):

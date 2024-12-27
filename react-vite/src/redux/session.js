@@ -142,14 +142,33 @@ export const thunkAddDonor = (donor) => async (dispatch) => {
 };
 export const thunkDeleteDonor = (currentUserId,donor) => async (dispatch) => {
   console.log('about to take off!!!')
+  console.log("DID", typeof donor.id)
   const response = await fetch(`/api/donor/${donor.id}`, {
     method: "DELETE"
   });
 
-
   if (response.ok) {
     // const data = await response.json();
     dispatch(thunkLoadDonations(currentUserId))
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return { errors: errorMessages };
+  } else {
+    return { errors: { server: "Something went wrong. Please try again." } };
+  }
+};
+
+export const thunkAddDonation = (donation,id) => async (dispatch) => {
+  const response = await fetch("/api/donations", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(donation),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+
+    return data; // Return the new donation object
   } else if (response.status < 500) {
     const errorMessages = await response.json();
     return { errors: errorMessages };

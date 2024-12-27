@@ -67,10 +67,18 @@ def delete_donor(id):
     """
     Delete a donor entry.
     """
+    print('id', id)
     donor = Donor.query.get_or_404(id)
-    db.session.delete(donor)
-    db.session.commit()
-    return jsonify({'message': 'Donor deleted successfully'}), 200
+    print('found the donor', donor.name)
+
+    try:
+        db.session.delete(donor)  # Pass the donor object, not donor.id
+        db.session.commit()  # Commit the changes to the database
+        return jsonify({'message': 'Donor deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()  # Rollback the session in case of error
+        print('Error deleting donor:', e)
+        return jsonify({'error': 'Failed to delete donor'}), 500
 
 # View all donors for a user
 @donor_routes.route('/user/<int:user_id>', methods=['GET'])

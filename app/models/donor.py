@@ -12,9 +12,9 @@ class Donor(db.Model):
     phone = db.Column(db.String(10), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
 
-    # Relationships
-    donations = db.relationship("Donation", backref="donor", lazy="joined")
-    subscriptions = db.relationship("Subscription", backref="donor", lazy="joined")
+    # Relationships with cascading deletes
+    donations = db.relationship("Donation", backref="donor", lazy="joined", cascade="all, delete-orphan")
+    subscriptions = db.relationship("Subscription", backref="donor", lazy="joined", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

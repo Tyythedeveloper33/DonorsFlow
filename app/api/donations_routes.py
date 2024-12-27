@@ -66,6 +66,7 @@ def delete_donation(id):
     Delete a donation entry.
     """
     donation = Donation.query.get_or_404(id)
+    print("donation", donation)
     db.session.delete(donation)
     db.session.commit()
     return jsonify({'message': 'Donation deleted successfully'}), 200
