@@ -116,7 +116,7 @@ export default function ViewDonors() {
                     className="view-donations-button"
                     onClick={() => handleViewDonations(donor.id)}
                   >
-                    View Donations
+                    Manage Donations
                   </button>
                 </div>
                 <div className="donor-actions-row">
