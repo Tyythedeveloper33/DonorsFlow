@@ -3,6 +3,13 @@ const REMOVE_USER = 'session/removeUser';
 const SET_DONATIONS = "session/setDonations"; // Changed from LOAD_DONATIONS to SET_DONATIONS
 const UPDATE_DONATION = "session/updateDonation"; // Changed from LOAD_DONATIONS to SET_DONATIONS
 const ADD_DONATION = "session/addDonation"; // Changed from LOAD_DONATIONS to SET_DONATIONS
+const ADD_STATEMENT = "session/addStatement";
+
+const addStatement = (statement) => ({
+  type: ADD_STATEMENT,
+  payload: statement,
+});
+
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -176,10 +183,31 @@ export const thunkAddDonation = (donation,id) => async (dispatch) => {
     return { errors: { server: "Something went wrong. Please try again." } };
   }
 };
+export const thunkAddStatment = (start_date,end_date,donor_id) => async (dispatch) => {
+  const statement = {"start_date":start_date,"end_date":end_date,donor_id}
+
+  const response = await fetch("/api/statement", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(statement),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+
+    return data; // Return the new donation object
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return { errors: errorMessages };
+  } else {
+    return { errors: { server: "Something went wrong. Please try again." } };
+  }
+};
+
 
 const initialState = {
   user: {
-    donations: [], // Initialize donations as an empty array
+     // Initialize donations as an empty array
     // other user properties like username, id, etc.
   }
 };
@@ -214,6 +242,15 @@ function sessionReducer(state = initialState, action) {
         ...state,
         user: { ...state.user, donations: action.payload }, // Update donations
       };
+      case ADD_STATEMENT:
+      return {
+    ...state,
+    user: {
+      ...state.user,
+      statements: [...(state.user.statements || []), action.payload], // Add the new statement to the list
+    },
+  };
+
     default:
       return state;
   }

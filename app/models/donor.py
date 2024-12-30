@@ -15,6 +15,7 @@ class Donor(db.Model):
     # Relationships with cascading deletes
     donations = db.relationship("Donation", backref="donor", lazy="joined", cascade="all, delete-orphan")
     subscriptions = db.relationship("Subscription", backref="donor", lazy="joined", cascade="all, delete-orphan")
+    statements = db.relationship("Statement", backref="donor", lazy="joined", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
@@ -24,5 +25,6 @@ class Donor(db.Model):
             'phone': self.phone,
             'user_id': self.user_id,
             'subscriptions': [subscription.to_dict() for subscription in self.subscriptions],
-            'donations': [donation.to_dict() for donation in self.donations]
+            'donations': [donation.to_dict() for donation in self.donations],
+            'statements': [statement.to_dict() for statement in self.statements],
         }

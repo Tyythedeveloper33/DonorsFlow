@@ -6,7 +6,6 @@ from flask_login import current_user, login_required
 statements_bp = Blueprint('statements', __name__)
 
 @statements_bp.route('/', methods=['POST'])
-@login_required
 def create_statement():
     """
     route for creating a donation
@@ -14,12 +13,12 @@ def create_statement():
     data = request.get_json()
 
     # Validate input
-    user_id = data.get('user_id')
+    donor_id = data.get('donor_id')
     start_date_str = data.get('start_date')
     end_date_str = data.get('end_date')
 
-    if not user_id or not start_date_str or not end_date_str:
-        return jsonify({"error": "user_id, start_date, and end_date are required."}), 400
+    if not donor_id or not start_date_str or not end_date_str:
+        return jsonify({"error": "donor_id, start_date, and end_date are required."}), 400
 
     try:
         start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
@@ -32,7 +31,7 @@ def create_statement():
 
     # (Optional) Check for overlapping statements for the same user
     overlapping_statement = Statement.query.filter(
-        Statement.user_id == user_id,
+        Statement.donor_id == donor_id,
         Statement.start_date <= end_date,
         Statement.end_date >= start_date
     ).first()
@@ -42,7 +41,7 @@ def create_statement():
 
     # Create and save the new statement
     new_statement = Statement(
-        user_id=user_id,
+        donor_id=donor_id,
         start_date=start_date,
         end_date=end_date
     )
@@ -53,7 +52,7 @@ def create_statement():
         "message": "Statement created successfully.",
         "statement": {
             "id": new_statement.id,
-            "user_id": new_statement.user_id,
+            "donor_id": new_statement.donor_id,
             "start_date": str(new_statement.start_date),
             "end_date": str(new_statement.end_date),
             "generated_on": new_statement.generated_on.isoformat()
