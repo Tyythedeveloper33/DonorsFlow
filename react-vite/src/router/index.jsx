@@ -5,21 +5,32 @@ import Home from '../components/Home';
 import Layout from './Layout';
 import LognSignPage from '../components/LognSign';
 import ViewDonors from '../components/ViewDonors';
+import ViewDonations from '../components/ViewDonations'; // Import the new component
+import ManageSubscriptions from '../components/ManageSubscriptions'; // Import the new component
+
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
         path: "/",
-        element: <LognSignPage/>,
+        element: <LognSignPage />,
       },
       {
         path: "/home",
-        element: <Home/>,
+        element: <Home />,
       },
       {
-        path: "donations",
-        element: <ViewDonors/>,
+        path: "/donors",
+        element: <ViewDonors />,
+      },
+      {
+        path: "/donors/:id/donations", // Route for viewing donations
+        element: <ViewDonations />,
+      },
+      {
+        path: "/donors/:id/subscriptions", // Route for managing subscriptions
+        element: <ManageSubscriptions />,
       },
     ],
   },

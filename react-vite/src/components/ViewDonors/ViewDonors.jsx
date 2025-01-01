@@ -1,13 +1,15 @@
 import "./ViewDonors.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { thunkDeleteDonor, thunkLoadDonations } from "../../redux/session";
+import { thunkUpdateDonor, thunkDeleteDonor, thunkLoadDonations } from "../../redux/session";
 import { useModal } from "../../context/Modal";
 import EditDonorModal from "../EditDonorModal/EditDonorModal";
 import AddDonorModal from "../AddDonorModal/AddDonorModal";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewDonors() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { setModalContent } = useModal();
   const sessionUser = useSelector((state) => state.session.user);
   const [donors, setDonors] = useState([]);
@@ -24,21 +26,23 @@ export default function ViewDonors() {
     }
   }, [sessionUser?.donations]);
 
-  const handleEdit = (donor) => {
+  const handleEdit = async (donor) => {
     setModalContent(
       <EditDonorModal
         donor={donor}
-        onSave={(updatedDonor) => {
+        onSave={async (updatedDonor) => {
           setDonors((prevDonors) =>
             prevDonors.map((d) => (d.id === updatedDonor.id ? updatedDonor : d))
           );
+          try {
+            await dispatch(thunkUpdateDonor(updatedDonor));
+            dispatch(thunkLoadDonations(sessionUser.id));
+          } catch (error) {
+            console.error("Failed to update donor:", error);
+          }
         }}
       />
     );
-  };
-
-  const handleDelete = (donor) => {
-    dispatch(thunkDeleteDonor(sessionUser.id, donor));
   };
 
   const handleAdd = () => {
@@ -54,6 +58,26 @@ export default function ViewDonors() {
     );
   };
 
+  const handleDelete = async (donor) => {
+    try {
+      // Dispatch the delete action and wait for it to complete
+      await dispatch(thunkDeleteDonor(parseInt(sessionUser.id), donor));
+
+      // Update the local state to remove the deleted donor
+      setDonors((prevDonors) => prevDonors.filter((d) => d.id !== donor.id));
+    } catch (error) {
+      console.error("Failed to delete donor:", error);
+    }
+  };
+
+  const handleViewDonations = (donorId) => {
+    navigate(`/donors/${donorId}/donations`);
+  };
+
+  const handleManageSubscriptions = (donorId) => {
+    navigate(`/donors/${donorId}/subscriptions`);
+  };
+
   return (
     <div className="view-donors-container">
       <button className="add-donor-button" onClick={handleAdd}>
@@ -67,42 +91,45 @@ export default function ViewDonors() {
           {donors.map((donor) => (
             <div className="donor-card" key={donor.id}>
               <div className="donor-header">
-                <h2 className="donor-name">{donor.donor_name}</h2>
-                <p className="donor-frequency">{donor.frequency} Donor</p>
+                <h2 className="donor-name">{donor.name}</h2>
               </div>
               <div className="donor-details">
                 <p className="donor-email">
                   <span role="img" aria-label="email">
                     📧
                   </span>{" "}
-                  {donor.donor_email || "Not Provided"}
+                  {donor.email || "Not Provided"}
                 </p>
                 <p className="donor-phone">
                   <span role="img" aria-label="phone">
                     📞
                   </span>{" "}
-                  {donor.donor_phone || "Not Provided"}
-                </p>
-                <p className="donor-amount">
-                  <span role="img" aria-label="amount">
-                    💵
-                  </span>{" "}
-                  ${donor.amount}
-                </p>
-                <p className="donor-date">
-                  <span role="img" aria-label="date">
-                    📅
-                  </span>{" "}
-                  {new Date(donor.date).toLocaleDateString()}
+                  {donor.phone || "Not Provided"}
                 </p>
               </div>
               <div className="donor-actions">
-                <button className="edit-button" onClick={() => handleEdit(donor)}>
-                  Edit
-                </button>
-                <button className="delete-button" onClick={() => handleDelete(donor)}>
-                  Delete
-                </button>
+                <div className="donor-actions-row">
+                  <button className="edit-button" onClick={() => handleEdit(donor)}>
+                    Edit
+                  </button>
+                  <button
+                    className="view-donations-button"
+                    onClick={() => handleViewDonations(donor.id)}
+                  >
+                    Manage Donations
+                  </button>
+                </div>
+                <div className="donor-actions-row">
+                  <button
+                    className="manage-subscriptions-button"
+                    onClick={() => handleManageSubscriptions(donor.id)}
+                  >
+                    Manage Subscriptions
+                  </button>
+                  <button className="delete-button" onClick={() => handleDelete(donor)}>
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))}

@@ -3,6 +3,13 @@ const REMOVE_USER = 'session/removeUser';
 const SET_DONATIONS = "session/setDonations"; // Changed from LOAD_DONATIONS to SET_DONATIONS
 const UPDATE_DONATION = "session/updateDonation"; // Changed from LOAD_DONATIONS to SET_DONATIONS
 const ADD_DONATION = "session/addDonation"; // Changed from LOAD_DONATIONS to SET_DONATIONS
+const ADD_STATEMENT = "session/addStatement";
+
+const addStatement = (statement) => ({
+  type: ADD_STATEMENT,
+  payload: statement,
+});
+
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -89,7 +96,7 @@ export const thunkLoadDonations = (id) => async (dispatch) => {
 
   console.log('Dispatching thunkLoadDonations with user ID:', id);
   try {
-      const response = await fetch(`/api/donations/user/${id}`);
+      const response = await fetch(`/api/donor/user/${id}`);
       console.log('Response status:', response.status); // Log the response status
 
       if (response.ok) {
@@ -104,9 +111,9 @@ export const thunkLoadDonations = (id) => async (dispatch) => {
       console.error('Error fetching donations:', error);
   }
 };
-export const thunkUpdateDonation = (credentials) => async (dispatch) => {
-  const response = await fetch(`/api/donations/${credentials.id}`, {
-    method: "POST",
+export const thunkUpdateDonor = (credentials) => async (dispatch) => {
+  const response = await fetch(`/api/donor/${credentials.id}`, {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
   });
@@ -124,7 +131,7 @@ export const thunkUpdateDonation = (credentials) => async (dispatch) => {
 // stuck trying to add donor , getting a 401 unauthorized from api/auth
 export const thunkAddDonor = (donor) => async (dispatch) => {
   console.log('about to take off!!!')
-  const response = await fetch("/api/donations", {
+  const response = await fetch("/api/donor", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(donor),
@@ -142,10 +149,10 @@ export const thunkAddDonor = (donor) => async (dispatch) => {
 };
 export const thunkDeleteDonor = (currentUserId,donor) => async (dispatch) => {
   console.log('about to take off!!!')
-  const response = await fetch(`/api/donations/${donor.id}`, {
+  console.log("DID", typeof donor.id)
+  const response = await fetch(`/api/donor/${donor.id}`, {
     method: "DELETE"
   });
-
 
   if (response.ok) {
     // const data = await response.json();
@@ -158,9 +165,49 @@ export const thunkDeleteDonor = (currentUserId,donor) => async (dispatch) => {
   }
 };
 
+export const thunkAddDonation = (donation,id) => async (dispatch) => {
+  const response = await fetch("/api/donations", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(donation),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+
+    return data; // Return the new donation object
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return { errors: errorMessages };
+  } else {
+    return { errors: { server: "Something went wrong. Please try again." } };
+  }
+};
+export const thunkAddStatment = (start_date,end_date,donor_id) => async (dispatch) => {
+  const statement = {"start_date":start_date,"end_date":end_date,donor_id}
+
+  const response = await fetch("/api/statement", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(statement),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+
+    return data; // Return the new donation object
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return { errors: errorMessages };
+  } else {
+    return { errors: { server: "Something went wrong. Please try again." } };
+  }
+};
+
+
 const initialState = {
   user: {
-    donations: [], // Initialize donations as an empty array
+     // Initialize donations as an empty array
     // other user properties like username, id, etc.
   }
 };
@@ -195,6 +242,15 @@ function sessionReducer(state = initialState, action) {
         ...state,
         user: { ...state.user, donations: action.payload }, // Update donations
       };
+      case ADD_STATEMENT:
+      return {
+    ...state,
+    user: {
+      ...state.user,
+      statements: [...(state.user.statements || []), action.payload], // Add the new statement to the list
+    },
+  };
+
     default:
       return state;
   }
