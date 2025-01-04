@@ -94,7 +94,7 @@ export const thunkLoadDonations = (id) => async (dispatch) => {
       return; // Exit if ID is invalid
   }
 
-  console.log('Dispatching thunkLoadDonations with user ID:', id);
+  console.log('Dispatching thunkLoadDonations with donor ID:', id);
   try {
       const response = await fetch(`/api/donor/user/${id}`);
       console.log('Response status:', response.status); // Log the response status
@@ -225,6 +225,29 @@ export const createSubscription = (subscription) => async (dispatch) => {
   }
 };
 
+export const thunkLoadDonorData = (id) => async (dispatch) => {
+  if (!id) {
+    console.error('Invalid donor ID provided to thunkLoadDonorData');
+    return; // Exit if ID is invalid
+  }
+
+  console.log('Dispatching thunkLoadDonorData with donor ID:', id);
+  try {
+    const response = await fetch(`/api/donor/${id}`);
+    console.log('Response status:', response.status); // Log the response status
+
+    if (response.ok) {
+      const data = await response.json(); // Parse the response as JSON
+      console.log('Donor data:', data); // Log the fetched donor data
+     return data
+    } else {
+      const errorMessage = await response.text(); // Get the error message from the response
+      console.error('Failed to fetch donor data. Status:', response.status, 'Message:', errorMessage);
+    }
+  } catch (error) {
+    console.error('Error fetching donor data:', error);
+  }
+};
 
 const initialState = {
   user: {
