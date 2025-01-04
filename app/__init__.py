@@ -10,6 +10,7 @@ from .api.auth_routes import auth_routes
 from .api.donations_routes import donation_routes
 from .api.statement_routes import statements_bp
 from .api.donor_routes import donor_routes
+from .api.subscription_routes import subscription_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -34,6 +35,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(donation_routes, url_prefix='/api/donations')
 app.register_blueprint(statements_bp, url_prefix='/api/statement')
 app.register_blueprint(donor_routes, url_prefix='/api/donor')
+app.register_blueprint(subscription_routes, url_prefix='/api/subscriptions')
 db.init_app(app)
 Migrate(app, db)
 

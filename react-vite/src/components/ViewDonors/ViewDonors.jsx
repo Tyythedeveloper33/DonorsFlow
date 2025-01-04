@@ -124,7 +124,7 @@ export default function ViewDonors() {
                     className="manage-subscriptions-button"
                     onClick={() => handleManageSubscriptions(donor.id)}
                   >
-                    Manage Subscriptions
+                    Create Subscription
                   </button>
                   <button className="delete-button" onClick={() => handleDelete(donor)}>
                     Delete

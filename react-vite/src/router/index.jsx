@@ -7,6 +7,7 @@ import LognSignPage from '../components/LognSign';
 import ViewDonors from '../components/ViewDonors';
 import ViewDonations from '../components/ViewDonations'; // Import the new component
 import ManageSubscriptions from '../components/ManageSubscriptions'; // Import the new component
+import UpdateSubscription from '../components/UpdateSubscriptions'; // Import the new component
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "/donors/:id/subscriptions", // Route for managing subscriptions
         element: <ManageSubscriptions />,
+      },
+      {
+        path: "/subscriptions/:id", // Route for managing subscriptions
+        element: <UpdateSubscription />,
       },
     ],
   },

@@ -204,6 +204,27 @@ export const thunkAddStatment = (start_date,end_date,donor_id) => async (dispatc
   }
 };
 
+export const createSubscription = (subscription) => async (dispatch) => {
+  try {
+    const response = await fetch("/api/subscriptions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(subscription),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create subscription");
+    }
+
+    const newSubscription = await response.json();
+    dispatch(createSubscriptionSuccess(newSubscription));
+  } catch (error) {
+    console.error("Error creating subscription:", error);
+  }
+};
+
 
 const initialState = {
   user: {
