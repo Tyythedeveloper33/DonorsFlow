@@ -25,14 +25,16 @@ const setDonations = (donations) => ({
   type: SET_DONATIONS, // Use SET_DONATIONS here
   payload: donations
 });
-const updateDonations = (donation)=>({
-  type: UPDATE_DONATION,
-  payload:donation
-})
+
 const addDonation = (donation)=>({
 type: ADD_DONATION,
 payload:donation
 })
+// Action creator to update a donor
+export const updateDonor = (donor) => ({
+  type: "UPDATE_DONOR",
+  donor,
+});
 
 
 export const thunkAuthenticate = () => async (dispatch) => {
@@ -237,8 +239,9 @@ export const thunkLoadDonorData = (id) => async (dispatch) => {
     console.log('Response status:', response.status); // Log the response status
 
     if (response.ok) {
-      const data = await response.json(); // Parse the response as JSON
-      console.log('Donor data:', data); // Log the fetched donor data
+        const data = await response.json();
+        console.log('about to update donor', data) // Donor data including updated `statements`
+     // Log the fetched donor data
      return data
     } else {
       const errorMessage = await response.text(); // Get the error message from the response
@@ -257,7 +260,7 @@ const initialState = {
 };
 
 function sessionReducer(state = initialState, action) {
-  console.log('Reducer received action:', action);
+  console.log("Reducer received action:", action);
   switch (action.type) {
     case SET_USER:
       // Ensure donations are not overwritten, if donations already exist
@@ -265,39 +268,46 @@ function sessionReducer(state = initialState, action) {
         ...state,
         user: {
           ...action.payload,
-          donations: action.payload.donations || [] // Safe fallback to an empty array
-        }
+          donations: action.payload.donations || [], // Safe fallback to an empty array
+        },
       };
+
     case REMOVE_USER:
       return { ...state, user: null };
-      case UPDATE_DONATION:
-  return {
-    ...state,
-    user: {
-      ...state.user,
-      donations: state.user.donations.map((donation) =>
-        donation.id === action.payload.id ? action.payload : donation
-      ),
-    },
-  };
 
-    case SET_DONATIONS: // Use SET_DONATIONS here
+    case UPDATE_DONATION:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          donations: state.user.donations.map((donation) =>
+            donation.id === action.payload.id ? action.payload : donation
+          ),
+        },
+      };
+
+
+
+
+    case SET_DONATIONS:
       return {
         ...state,
         user: { ...state.user, donations: action.payload }, // Update donations
       };
-      case ADD_STATEMENT:
+
+    case ADD_STATEMENT:
       return {
-    ...state,
-    user: {
-      ...state.user,
-      statements: [...(state.user.statements || []), action.payload], // Add the new statement to the list
-    },
-  };
+        ...state,
+        user: {
+          ...state.user,
+          statements: [...(state.user.statements || []), action.payload], // Add new statement
+        },
+      };
 
     default:
       return state;
   }
 }
+
 
 export default sessionReducer;

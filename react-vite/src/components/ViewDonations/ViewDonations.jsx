@@ -27,7 +27,7 @@ export default function ViewDonations() {
         const donorData = await dispatch(thunkLoadDonorData(id)); // Wait for the donor data to load
         if (donorData) {
           setDonorName(donorData.name); // Set donor name from the response
-          console.log("Donor Name:", donorData.name); // Log donor name
+          console.log("Donor Name:", donorData); // Log donor name
         }
       }
       if (sessionUser?.donors && id) {
