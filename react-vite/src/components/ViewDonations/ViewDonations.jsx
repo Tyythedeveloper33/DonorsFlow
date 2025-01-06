@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { thunkLoadDonorData, thunkAddDonation } from "../../redux/session"; // Update the thunk name here
+import { thunkLoadDonorData, thunkAddDonation } from "../../redux/session";
 import { useModal } from "../../context/Modal";
 import AddDonationModal from "../AddDonationModal/AddDonationModal";
 import GenerateStatementModal from "../GenerateStatementModal";
@@ -14,20 +14,29 @@ export default function ViewDonations() {
   const donor = useSelector((state) =>
     state.session.user.donors ? state.session.user.donors.find((d) => d.id === parseInt(id)) : null
   );
+
   const [donations, setDonations] = useState([]);
   const [loadingDonations, setLoadingDonations] = useState(true);
   const [showStatements, setShowStatements] = useState(false);
-  const [donorName, setDonorName] = useState(null); // Add state to store donor name
+  const [donorName, setDonorName] = useState(null);
+  const [statements, setStatements] = useState([]);
+  const [loadingStatements, setLoadingStatements] = useState(false);
   const { setModalContent } = useModal();
 
-  // Load donor data when the page loads
+  const handleLoadDonor = async () => {
+    setLoadingStatements(true);
+    const updatedDonorData = await dispatch(thunkLoadDonorData(id));
+    setStatements(updatedDonorData.statements || []);
+    setLoadingStatements(false);
+  };
+
   useEffect(() => {
     const loadDonorData = async () => {
       if (id) {
-        const donorData = await dispatch(thunkLoadDonorData(id)); // Wait for the donor data to load
+        const donorData = await dispatch(thunkLoadDonorData(id));
         if (donorData) {
-          setDonorName(donorData.name); // Set donor name from the response
-          console.log("Donor Name:", donorData); // Log donor name
+          setDonorName(donorData.name);
+          setStatements(donorData.statements || []);
         }
       }
       if (sessionUser?.donors && id) {
@@ -66,6 +75,7 @@ export default function ViewDonations() {
         onGenerate={(dateRange) => {
           console.log("Generating statement for date range:", dateRange);
         }}
+        onLoad={handleLoadDonor}
         id={id}
       />
     );
@@ -98,7 +108,7 @@ export default function ViewDonations() {
               donations.map((donation) => (
                 <div className="donation-card" key={donation.id}>
                   <div className="donation-header">
-                    <h3>{donorName || "Anonymous"}</h3> {/* Use donor name here */}
+                    <h3>{donorName || "Anonymous"}</h3>
                     <p className="donation-date">
                       {new Date(donation.date).toLocaleDateString()}
                     </p>
@@ -125,10 +135,12 @@ export default function ViewDonations() {
 
       {showStatements && (
         <div className="statements-list">
-          {donor?.statements?.length === 0 ? (
+          {loadingStatements ? (
+            <p>Loading statements...</p>
+          ) : statements.length === 0 ? (
             <p>No statements available.</p>
           ) : (
-            donor.statements.map((statement) => (
+            statements.map((statement) => (
               <div className="statement-card" key={statement.id}>
                 <h2 className="statement-header">
                   Statement for{" "}
@@ -145,14 +157,10 @@ export default function ViewDonations() {
                   ) : (
                     getDonationsForStatement(statement).map((donation) => (
                       <div className="donation-card" key={donation.id}>
-                        <div className="donation-header">
-                          <p className="donation-date">
-                            {new Date(donation.date).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="donation-details">
-                          <span className="donation-label">Amount: {donation.amount}</span>
-                        </div>
+                        <p className="donation-date">
+                          {new Date(donation.date).toLocaleDateString()}
+                        </p>
+                        <span className="donation-label">Amount: {donation.amount}</span>
                       </div>
                     ))
                   )}

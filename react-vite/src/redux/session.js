@@ -30,6 +30,10 @@ const addDonation = (donation)=>({
 type: ADD_DONATION,
 payload:donation
 })
+const updateDonations = (donation)=>({
+  type: UPDATE_DONATION,
+  payload:donation
+})
 // Action creator to update a donor
 export const updateDonor = (donor) => ({
   type: "UPDATE_DONOR",

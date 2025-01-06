@@ -1,18 +1,16 @@
 import { useModal } from "../../context/Modal";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { thunkAddStatment, thunkLoadDonorData } from "../../redux/session";
-import { useParams } from "react-router-dom"; // Import useParams to get the id from URL params
-
-export function GenerateStatementModal({ onGenerate }) {
+import { thunkAddStatment } from "../../redux/session";
+import { useParams } from "react-router-dom";
+import "./GenerateStatementModal.css"
+export function GenerateStatementModal({ onGenerate, onLoad }) {
   const { closeModal } = useModal();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-
-  // Get the donor id from URL params
-  const { id } = useParams(); // Assuming your route is something like `/donor/:id`
+  const { id } = useParams();
 
   const handleGenerate = async () => {
     const validationErrors = {};
@@ -33,11 +31,9 @@ export function GenerateStatementModal({ onGenerate }) {
       if (result.errors) {
         setErrors(result.errors);
       } else {
-        // After successfully adding the statement, reload the donor data using the id from the params
-        dispatch(thunkLoadDonorData(id)); // Pass `id` to load the updated donor data
-
-        onGenerate({ startDate, endDate }); // Callback to handle any additional functionality
-        closeModal(); // Close the modal after generation
+        await onLoad(); // Reload donor data
+        onGenerate({ startDate, endDate });
+        closeModal();
       }
     } catch (error) {
       console.error("Error generating statement:", error);
