@@ -55,7 +55,7 @@ export default function Home() {
       setDonorSubscriptions([]);
       return;
     }
-
+  
     const donor = donors.find((d) => d.id === parseInt(donorId)); // Use the fetched donors
     setSelectedDonor(donor);
 
@@ -104,10 +104,12 @@ export default function Home() {
               </div>
             </div>
             <div className="stat-card">
-              <h3>Profile</h3>
+              <h3>Profile Stats</h3>
               <div className="stat-value">
-                <p>20</p>
-                <span>$500</span>
+                <p>0</p>
+                <br />
+                <button onClick={() => window.alert('Tier System Coming Soon!!!')}>Tier System</button>
+
               </div>
             </div>
           </div>
