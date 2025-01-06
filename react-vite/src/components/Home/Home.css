@@ -1,97 +1,134 @@
 /* General Dashboard Styling */
 .home-dashboard {
-    padding: 2rem;
-    text-align: center;
-    background-color: transparent;
-    min-height: 100vh;
-  }
+  padding: 2rem;
+  text-align: center;
+  background-color: transparent;
+  min-height: 100vh;
+}
 
-  /* Welcome Header */
-  .welcome-header {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #333;
-  }
+/* Welcome Header */
+.welcome-header {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
 
-  .welcome-header span {
-    color: #00bcd4;
-    font-weight: bold;
-  }
+.welcome-header span {
+  color: #00bcd4;
+  font-weight: bold;
+}
 
-  /* Stats Container */
-  .stats-container {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
+/* Stats Container */
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
 
-  .stat-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-    width: 200px;
-    text-align: center;
-  }
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  width: 200px;
+  text-align: center;
+}
 
-  .stat-card h3 {
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    color: #555;
-  }
+.stat-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #555;
+}
 
-  .stat-value p {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #00bcd4;
-  }
+.stat-value p {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00bcd4;
+}
 
-  .stat-value span {
-    font-size: 1.2rem;
-    color: #333;
-  }
+.stat-value span {
+  font-size: 1.2rem;
+  color: #333;
+}
 
-  /* Recent Donations Table */
-  .recent-donations {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    margin-top: 2rem;
-  }
+/* Recent Donations Section Styling */
+.recent-donations {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-top: 2rem;
+  text-align: center; /* Centering content */
+}
 
-  .recent-donations h3 {
-    margin-bottom: 1rem;
-    color: #333;
-  }
+/* Subscribers Heading */
+.recent-donations h3 {
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center; /* Ensuring the heading is centered */
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+/* Donor Select */
+.donor-select {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center; /* Centering the select dropdown */
+  align-items: center;
+}
 
-  th, td {
-    padding: 0.8rem;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
+.donor-select label {
+  font-size: 1rem;
+  color: #555;
+  margin-right: 1rem; /* Space between label and select */
+}
 
-  th {
-    background-color: #f0f0f0;
-    color: #555;
-  }
+.donor-select select {
+  width: 200px; /* Set width to control size */
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
 
-  button {
-    background-color: #00bcd4;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
+.donor-select select:focus {
+  border-color: #00bcd4;
+  outline: none;
+}
 
-  button:hover {
-    background-color: #028fa7;
-  }
+/* Subscriptions Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+button {
+  background-color: #00bcd4;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #028fa7;
+}

@@ -4,12 +4,12 @@ import "./Navigation.css";
 
 function Navigation() {
   return (
-    
+
     <nav className="navbar">
       <ul className="nav-list">
         <li>
           <NavLink to="/" className="nav-link" activeClassName="active-link">
-            Home
+            DonorsFlow
           </NavLink>
         </li>
         <li>

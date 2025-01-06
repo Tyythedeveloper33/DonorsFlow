@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './UpdateSubscription.css';
-
+import { useNavigate } from 'react-router-dom';
 const UpdateSubscription = () => {
   const [amount, setAmount] = useState('');
   const [type, setType] = useState('');
   const { id } = useParams();
-  
+  const navigate = useNavigate()
   // Handle updating the subscription
   const handleUpdateSubscription = async () => {
     if (!amount || !type) {
@@ -28,7 +28,7 @@ const UpdateSubscription = () => {
         alert('Subscription updated successfully');
         // You can redirect or update the UI based on the updated subscription data
         // Example: Redirect to the subscriptions list or details page
-        history.push('/subscriptions'); // Example redirect
+        navigate('/'); // Example redirect
       } else {
         const error = await response.json();
         alert(`Error: ${error.error}`);
@@ -50,7 +50,7 @@ const UpdateSubscription = () => {
         const result = await response.json();
         alert(result.message);  // Show success message
         // Redirect to subscriptions list or homepage after deleting
-        history.push('/subscriptions');
+        navigate('/')
       } else {
         const error = await response.json();
         alert(`Error: ${error.error}`);

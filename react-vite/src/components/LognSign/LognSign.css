@@ -1,108 +1,129 @@
 /* General form container for better visual blending */
 .form-container {
-    background: transparent; /* Dark semi-transparent background to enhance contrast */
-    padding: 2rem;
-    border-radius: 10px;
-    /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); */
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 8rem; /* Ensure it's pushed down to avoid overlap with the navbar */
-  }
+  background: transparent; /* Dark semi-transparent background to enhance contrast */
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 8rem;
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); */
+  backdrop-filter: blur(10px); /* Subtle blur effect for better visual appearance */
+}
 
-  /* Title and tagline styling */
+/* Title and tagline styling */
+.DonorsFlow {
+  color: #FFFFFF; /* Clean white text */
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Light text shadow for readability */
+}
+
+.Empowering {
+  color: rgba(224, 224, 224, 0.7); /* Slightly faded for a softer look */
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 1rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Form inputs */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Input field and label styling */
+.input-group label {
+  display: block;
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+  color: #333;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #FFEB3B; /* Accent color on focus */
+  background-color: rgba(255, 255, 255, 1); /* Full opacity on focus */
+}
+
+/* Submit Button */
+.submit-btn {
+  background-color: #FFEB3B;
+  color: black;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background-color: #ffdd00;
+}
+
+/* Switch form link */
+.switch-form {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.switch-form a {
+  color: #FFEB3B;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.switch-form a:hover {
+  color: #ffdd00;
+  text-decoration: underline;
+}
+
+/* Error Messages */
+.error-messages {
+  color: #ff4d4d;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.error-messages p {
+  margin: 0.5rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
   .DonorsFlow {
-    color: #FFFFFF; /* Clean white text */
-    font-size: 3rem;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Light text shadow for readability */
+    font-size: 2.5rem;
   }
 
   .Empowering {
-    color: #e0e0e000; /* Slightly faded for a softer look */
-    font-size: 1.5rem;
-    font-weight: 400;
-    text-align: center;
-    margin-top: 1rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    font-size: 1.3rem;
   }
 
-  /* Form inputs */
-  .auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
+  .form-container {
+    width: 90%;
   }
 
-  /* Input field and label styling */
-  .input-group label {
-    display: block;
-    color: #FFF;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .input-group input {
-    width: 100%;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
-    color: #333;
-    font-size: 1rem;
-  }
-
-  .input-group input:focus {
-    outline: none;
-    border-color: #FFEB3B; /* Accent color on focus */
-  }
-
-  /* Submit Button */
   .submit-btn {
-    background-color: #FFEB3B;
-    color: black;
-    font-weight: bold;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 108%;
+    font-size: 1.2rem;
   }
-
-  .submit-btn:hover {
-    background-color: #ffdd00;
-  }
-
-  /* Switch form link */
-  .switch-form {
-    text-align: center;
-    margin-top: 1rem;
-  }
-
-  .switch-form a {
-    color: #FFEB3B;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .switch-form a:hover {
-    text-decoration: underline;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 480px) {
-    .DonorsFlow {
-      font-size: 2rem;
-    }
-
-    .Empowering {
-      font-size: 1.2rem;
-    }
-
-    .form-container {
-      width: 90%;
-    }
-  }
+}

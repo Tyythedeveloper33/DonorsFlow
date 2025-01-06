@@ -39,7 +39,7 @@
 }
 
 .nav-link:hover {
-  color: #FFEB3B; /* Highlight color on hover */
+  color: #00bcd4; /* Highlight color on hover */
   transform: scale(1.1); /* Slight scale effect on hover */
 }
 
@@ -59,12 +59,54 @@
   transition: background 0.3s ease, color 0.3s ease;
   margin-right: 2rem; /* Adds space between the button and the right edge */
   white-space: nowrap; /* Prevents button text from wrapping */
+  position: relative; /* Positioning context for dropdown */
 }
 
 /* Profile button hover styling */
 .profile-button:hover {
-  background: #FFEB3B;
+  background: #00bcd4;
   color: #000;
+}
+
+/* Dropdown menu styling (hidden by default) */
+.profile-dropdown {
+  position: absolute;
+  top: 100%; /* Aligns dropdown directly below the profile button */
+  right: 0;
+  background-color: #333;
+  color: #fff;
+  list-style: none;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  width: 200px;
+  display: block; /* Always visible if showMenu is true */
+  z-index: 10; /* Keeps dropdown above other content */
+}
+
+/* List items inside the dropdown */
+.profile-dropdown li {
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.profile-dropdown li:hover {
+  background-color: #00bcd4;
+  color: black;
+}
+
+/* Styling for the logout button inside the dropdown */
+.profile-dropdown button {
+  background-color: transparent;
+  border: none;
+  color: #00bcd4;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.profile-dropdown button:hover {
+  color: black;
 }
 
 /* Responsive design for smaller screens */
