@@ -223,9 +223,9 @@ export const createSubscription = (subscription) => async (dispatch) => {
     if (!response.ok) {
       throw new Error("Failed to create subscription");
     }
-
-    const newSubscription = await response.json();
-    dispatch(createSubscriptionSuccess(newSubscription));
+   return response
+    // const newSubscription = await response.json();
+    // dispatch(createSubscriptionSuccess(newSubscription));
   } catch (error) {
     console.error("Error creating subscription:", error);
   }

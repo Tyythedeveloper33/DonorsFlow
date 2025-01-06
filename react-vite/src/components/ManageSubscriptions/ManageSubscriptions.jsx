@@ -3,10 +3,11 @@ import "./ManageSubscriptions.css";
 import { createSubscription } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function ManageSubscriptions() {
   const {id} = useParams()
   const dispatch = useDispatch();
-
+const navigate = useNavigate()
   // State to hold form values
   const [formValues, setFormValues] = useState({
     donor_id:parseInt(id),
@@ -24,14 +25,16 @@ export default function ManageSubscriptions() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // Dispatch an action here or send data to backend
     console.log("Creating Subscription:", formValues);
 
     // Example dispatch:
-    dispatch(createSubscription(formValues));
+   await dispatch(createSubscription(formValues));
+   
+   navigate('/')
   };
 
   return (

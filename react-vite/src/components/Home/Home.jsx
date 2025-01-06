@@ -1,54 +1,74 @@
 import "./Home.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { thunkLoadDonations } from "../../redux/session";
+import { thunkLoadDonorData } from "../../redux/session";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const navigate = useNavigate();
-
-  const [selectedDonor, setSelectedDonor] = useState(null); // For storing the selected donor
-  const [donorSubscriptions, setDonorSubscriptions] = useState([]); // For storing subscriptions of selected donor
+  const [selectedDonor, setSelectedDonor] = useState(null);
+  const [donorSubscriptions, setDonorSubscriptions] = useState([]);
+  const [donors, setDonors] = useState([]); // New state to store fetched donors
 
   let username;
-  let totalDonations = 0;
   let totalAmtDonations = 0;
   let totalDonors = 0;
-  let donorTotal = 0;
 
-  // Only proceed if there is a sessionUser
   if (sessionUser && sessionUser.id) {
     username = sessionUser.username;
-    totalDonors = sessionUser.donors ? sessionUser.donors.length : 0;
-
-    totalAmtDonations = sessionUser.donors?.reduce((total, donor) => {
-      donorTotal = donor.donations?.reduce((donationTotal, donation) => {
+    totalDonors = donors.length; // Use the length of fetched donors
+    totalAmtDonations = donors?.reduce((total, donor) => {
+      const donorTotal = donor.donations?.reduce((donationTotal, donation) => {
         return donationTotal + donation.amount;
       }, 0);
-
       return total + donorTotal;
     }, 0);
   }
 
+  // Fetch donors when the component mounts
   useEffect(() => {
-    if (sessionUser?.id && sessionUser.donors) {
-      // Only load donations if they haven't been loaded already
-      if (!sessionUser.donors.length) {
-        dispatch(thunkLoadDonations(sessionUser.id));
-      }
+    if (sessionUser?.id) {
+      const fetchDonors = async () => {
+        try {
+          const response = await fetch(`/api/donor/user/${sessionUser.id}`); // Fetch from backend route
+          if (!response.ok) {
+            throw new Error('Failed to fetch donors');
+          }
+          const data = await response.json(); // Parse JSON response
+          console.log(data); // Visualize the response in the console
+          setDonors(data); // Store the response data in state
+        } catch (error) {
+          console.error("Error fetching donors:", error);
+        }
+      };
+
+      fetchDonors();
     }
   }, [sessionUser]);
 
-  const handleDonorSelect = (e) => {
+  const handleDonorSelect = async (e) => {
     const donorId = e.target.value;
-    const donor = sessionUser.donors.find((d) => d.id === parseInt(donorId));
+    if (!donorId) {
+      setSelectedDonor(null);
+      setDonorSubscriptions([]);
+      return;
+    }
+
+    const donor = donors.find((d) => d.id === parseInt(donorId)); // Use the fetched donors
     setSelectedDonor(donor);
 
-    // Load subscriptions for the selected donor
-    if (donor) {
-      setDonorSubscriptions(donor.subscriptions);
+    try {
+      const updatedDonor = await dispatch(thunkLoadDonorData(donorId));
+      if (updatedDonor?.subscriptions) {
+        setDonorSubscriptions(updatedDonor.subscriptions);
+      } else {
+        setDonorSubscriptions([]);
+      }
+    } catch (error) {
+      console.error("Error loading donor data:", error);
+      setDonorSubscriptions([]);
     }
   };
 
@@ -60,7 +80,6 @@ export default function Home() {
     navigate("/donors");
   };
 
-  // Redirect to login if there's no sessionUser
   useEffect(() => {
     if (!sessionUser) {
       navigate("/login");
@@ -77,11 +96,11 @@ export default function Home() {
 
           <div className="stats-container">
             <div className="stat-card">
-              <h3> Donations</h3>
+              <h3>Donations</h3>
               <button onClick={viewDonations}>View/Add Donors</button>
               <div className="stat-value">
                 <p>{totalDonors}</p>
-                <span>total ${totalAmtDonations}</span>
+                <span>Total: ${totalAmtDonations}</span>
               </div>
             </div>
             <div className="stat-card">
@@ -96,7 +115,6 @@ export default function Home() {
           <div className="recent-donations">
             <h3>Subscribers</h3>
 
-            {/* Dropdown for selecting a donor */}
             <div className="donor-select">
               <label>Select Donor</label>
               <select
@@ -104,7 +122,7 @@ export default function Home() {
                 value={selectedDonor ? selectedDonor.id : ""}
               >
                 <option value="">-- Select a Donor --</option>
-                {sessionUser.donors?.map((donor) => (
+                {donors.map((donor) => (
                   <option key={donor.id} value={donor.id}>
                     {donor.name}
                   </option>
@@ -112,34 +130,36 @@ export default function Home() {
               </select>
             </div>
 
-            {/* Display subscriptions for the selected donor */}
-            {selectedDonor && (
+            {donorSubscriptions.length > 0 ? (
               <table>
                 <thead>
                   <tr>
                     <th>Total Donations</th>
                     <th>Date</th>
-                    <th>Active Subscriptions</th>
+                    <th>Status</th>
                     <th>Subscription Amount</th>
                     <th>Manage</th>
                   </tr>
                 </thead>
                 <tbody>
-
                   {donorSubscriptions.map((subscription) => (
                     <tr key={subscription.id}>
-                     {subscription ? console.log(JSON.stringify(subscription)) : ''}  {/* Corrected the logging */}
                       <td>
-                        ${subscription.donations?.reduce(
+                        $
+                        {subscription.donations?.reduce(
                           (sum, donation) => sum + donation.amount,
                           0
                         )}
                       </td>
-                      <td>{new Date(subscription.start_date).toLocaleDateString()}</td>
+                      <td>
+                        {new Date(subscription.start_date).toLocaleDateString()}
+                      </td>
                       <td>{subscription.end_date ? "Inactive" : "Active"}</td>
                       <td>${subscription.amount}</td>
                       <td>
-                        <button onClick={() => manageSubscription(subscription.id)}>
+                        <button
+                          onClick={() => manageSubscription(subscription.id)}
+                        >
                           Manage Subscriptions
                         </button>
                       </td>
@@ -147,7 +167,9 @@ export default function Home() {
                   ))}
                 </tbody>
               </table>
-            )}
+            ) : selectedDonor ? (
+              <p>No subscriptions found for this donor.</p>
+            ) : null}
           </div>
         </>
       ) : (
